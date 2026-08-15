@@ -1,0 +1,2509 @@
+<!DOCTYPE html>
+<html lang="es" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PixelConvert - Convertidor de Imágenes Rápido</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Identity Services -->
+    <script
+        src="https://accounts.google.com/gsi/client"
+        async
+        defer>
+    </script>
+
+    <!-- Facebook SDK -->
+    <script
+        async
+        defer
+        crossorigin="anonymous"
+        src="https://connect.facebook.net/es_LA/sdk.js">
+    </script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+</head>
+
+
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex flex-col justify-between select-none transition-colors duration-300">
+
+
+    <!-- =========================================================
+         CABECERA
+    ========================================================== -->
+
+    <header class="bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-xl sticky top-0 z-50">
+
+        <div class="container mx-auto px-6 py-4">
+
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+
+
+                <!-- Logo -->
+
+                <div class="flex items-center justify-between">
+
+                    <a href="#" class="flex items-center gap-2.5 group">
+
+                        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center shadow-lg shadow-indigo-500/30 group-hover:scale-105 transition">
+
+                            <svg
+                                class="w-5 h-5 text-white"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2.5"
+                                viewBox="0 0 24 24">
+
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                </path>
+
+                            </svg>
+
+                        </div>
+
+
+                        <div class="flex flex-col">
+
+                            <span class="text-lg font-black tracking-tight text-slate-900 dark:text-white flex items-center gap-1.5">
+
+                                Pixel<span class="text-indigo-600 dark:text-indigo-400">
+                                    Convert
+                                </span>
+
+                            </span>
+
+                            <span class="text-[10px] text-slate-500 dark:text-slate-400 font-semibold tracking-widest uppercase -mt-1">
+                                Studio Suite
+                            </span>
+
+                        </div>
+
+                    </a>
+
+
+                    <!-- Acciones móviles -->
+
+                    <div class="flex items-center gap-2 md:hidden">
+
+                        <button
+                            id="btn-theme-mobile"
+                            class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 transition">
+
+                            <svg
+                                class="w-4 h-4 hidden dark:block"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                viewBox="0 0 24 24">
+
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
+                                </path>
+
+                            </svg>
+
+
+                            <svg
+                                class="w-4 h-4 block dark:hidden"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                viewBox="0 0 24 24">
+
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z">
+                                </path>
+
+                            </svg>
+
+                        </button>
+
+
+                        <button
+                            onclick="abrirModal('registro')"
+                            class="text-xs font-semibold bg-indigo-600 text-white px-3 py-1.5 rounded-lg shadow-md">
+
+                            Registro
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Navegación -->
+
+                <nav class="flex items-center gap-1.5 overflow-x-auto md:overflow-visible pb-2 md:pb-0 [scrollbar-width:none]">
+
+                    <a href="#"
+                       class="px-3.5 py-2 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-indigo-600 transition whitespace-nowrap">
+
+                        Comprimir
+
+                    </a>
+
+                    <a href="#"
+                       class="px-3.5 py-2 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-indigo-600 transition whitespace-nowrap">
+
+                        Redimensionar
+
+                    </a>
+
+                    <a href="#"
+                       class="px-3.5 py-2 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-indigo-600 transition whitespace-nowrap">
+
+                        Recortar
+
+                    </a>
+
+                    <a href="#"
+                       class="px-3.5 py-2 rounded-lg text-xs font-semibold bg-indigo-50 dark:bg-indigo-600/10 text-indigo-600 border border-indigo-200 dark:border-indigo-500/20 whitespace-nowrap">
+
+                        Convertir JPG
+
+                    </a>
+
+                    <a href="#"
+                       class="px-3.5 py-2 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-indigo-600 transition whitespace-nowrap">
+
+                        Editor
+
+                    </a>
+
+                </nav>
+
+
+                <!-- Botones escritorio -->
+
+                <div class="hidden md:flex items-center gap-3">
+
+                    <button
+                        id="btn-theme-desktop"
+                        class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 transition border border-slate-200 dark:border-slate-700"
+                        title="Cambiar tema">
+
+                        <svg
+                            class="w-4 h-4 hidden dark:block"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            viewBox="0 0 24 24">
+
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
+                            </path>
+
+                        </svg>
+
+
+                        <svg
+                            class="w-4 h-4 block dark:hidden"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            viewBox="0 0 24 24">
+
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z">
+                            </path>
+
+                        </svg>
+
+                    </button>
+
+
+                    <button
+                        onclick="abrirModal('login')"
+                        class="text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white px-4 py-2 transition">
+
+                        Acceder
+
+                    </button>
+
+
+                    <button
+                        onclick="abrirModal('registro')"
+                        class="text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2 rounded-xl transition shadow-lg shadow-indigo-600/25">
+
+                        Registro
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =========================================================
+         CONTENIDO PRINCIPAL
+    ========================================================== -->
+
+    <main class="max-w-4xl mx-auto w-full px-4 my-8 space-y-12">
+
+
+        <!-- Convertidor -->
+
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-8 rounded-2xl shadow-xl">
+
+            <div class="text-center mb-6">
+
+                <h2 class="text-2xl font-extrabold text-slate-900 dark:text-slate-100">
+
+                    Convierte tus imágenes al instante
+
+                </h2>
+
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
+
+                    Transforma formatos de forma segura, rápida y sin instalar programas.
+
+                </p>
+
+            </div>
+
+
+            <form id="form-convertidor" class="space-y-6">
+
+
+                <div class="flex flex-col items-center justify-center">
+
+                    <div
+                        id="drop-zone"
+                        class="w-full bg-indigo-600 hover:bg-indigo-500 transition-all duration-300 p-8 rounded-2xl text-center shadow-xl shadow-indigo-600/30 flex flex-col items-center justify-center gap-2 cursor-pointer relative group">
+
+
+                        <input
+                            type="file"
+                            name="imagenes"
+                            id="input-imagenes"
+                            multiple
+                            accept="image/*"
+                            class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                            required>
+
+
+                        <div
+                            id="textos-guia"
+                            class="flex flex-col items-center gap-1 pointer-events-none text-white">
+
+                            <span class="text-lg font-bold tracking-wide">
+
+                                Seleccionar imágenes
+
+                            </span>
+
+                            <span class="text-xs text-indigo-200 font-medium">
+
+                                o arrastra y suelta tus fotos aquí
+
+                            </span>
+
+                        </div>
+
+
+                        <div
+                            id="contenedor-preview"
+                            class="hidden flex-col items-center gap-3 w-full z-20 pointer-events-none">
+
+                            <span
+                                id="contador-archivos"
+                                class="text-xs text-indigo-200 uppercase tracking-wider font-bold">
+                            </span>
+
+                            <div
+                                id="grid-preview"
+                                class="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full max-h-48 overflow-y-auto p-2">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Formato -->
+
+                <div
+                    class="bg-slate-100 dark:bg-slate-950 p-4 rounded-xl border border-slate-200 dark:border-slate-800 space-y-3">
+
+                    <label
+                        class="block text-sm font-medium text-slate-700 dark:text-slate-300 text-center">
+
+                        Selecciona el formato de salida:
+
+                    </label>
+
+
+                    <div class="grid grid-cols-3 gap-3">
+
+
+                        <label class="cursor-pointer">
+
+                            <input
+                                type="radio"
+                                name="formato"
+                                value="JPEG"
+                                class="peer sr-only"
+                                checked>
+
+                            <div
+                                class="text-center py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 peer-checked:bg-indigo-600 peer-checked:text-white peer-checked:border-indigo-500 font-medium text-sm transition shadow-sm">
+
+                                JPG
+
+                            </div>
+
+                        </label>
+
+
+                        <label class="cursor-pointer">
+
+                            <input
+                                type="radio"
+                                name="formato"
+                                value="PNG"
+                                class="peer sr-only">
+
+                            <div
+                                class="text-center py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 peer-checked:bg-indigo-600 peer-checked:text-white peer-checked:border-indigo-500 font-medium text-sm transition shadow-sm">
+
+                                PNG
+
+                            </div>
+
+                        </label>
+
+
+                        <label class="cursor-pointer">
+
+                            <input
+                                type="radio"
+                                name="formato"
+                                value="WEBP"
+                                class="peer sr-only">
+
+                            <div
+                                class="text-center py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 peer-checked:bg-indigo-600 peer-checked:text-white peer-checked:border-indigo-500 font-medium text-sm transition shadow-sm">
+
+                                WEBP
+
+                            </div>
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    id="btn-submit"
+                    class="w-full bg-slate-200 dark:bg-slate-800 text-slate-400 dark:text-slate-500 font-bold py-3.5 rounded-xl transition-all duration-300 border border-slate-300 dark:border-slate-700 shadow-sm cursor-not-allowed"
+                    disabled>
+
+                    Convertir y Descargar
+
+                </button>
+
+            </form>
+
+        </div>
+
+
+
+        <!-- Características -->
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+
+
+            <div
+                class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl shadow-md space-y-2">
+
+                <div
+                    class="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-600/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold text-lg">
+
+                    1
+
+                </div>
+
+                <h3 class="font-bold text-slate-900 dark:text-white text-base">
+
+                    Conversión Ultra Rápida
+
+                </h3>
+
+                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+
+                    Procesa múltiples imágenes al mismo tiempo directamente desde tu navegador sin demoras.
+
+                </p>
+
+            </div>
+
+
+            <div
+                class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl shadow-md space-y-2">
+
+                <div
+                    class="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-600/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold text-lg">
+
+                    2
+
+                </div>
+
+                <h3 class="font-bold text-slate-900 dark:text-white text-base">
+
+                    Privacidad Garantizada
+
+                </h3>
+
+                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+
+                    Tus archivos se procesan de forma local y segura, manteniendo absoluta confidencialidad.
+
+                </p>
+
+            </div>
+
+
+            <div
+                class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl shadow-md space-y-2">
+
+                <div
+                    class="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-600/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold text-lg">
+
+                    3
+
+                </div>
+
+                <h3 class="font-bold text-slate-900 dark:text-white text-base">
+
+                    Múltiples Formatos
+
+                </h3>
+
+                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+
+                    Compatible con los estándares más populares de la web como JPG, PNG y WEBP modernos.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+
+    <!-- =========================================================
+         MODAL DE AUTENTICACIÓN
+    ========================================================== -->
+
+    <div
+        id="auth-modal"
+        class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+
+
+        <div
+            class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 w-full max-w-4xl rounded-3xl shadow-2xl overflow-hidden relative grid grid-cols-1 md:grid-cols-2 animate-in fade-in zoom-in-95 duration-200 my-auto">
+
+
+            <!-- Cerrar -->
+
+            <button
+                onclick="cerrarModal()"
+                class="absolute top-4 right-4 w-9 h-9 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-400 hover:text-slate-700 dark:hover:text-white transition z-20 shadow-sm">
+
+                <svg
+                    class="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    viewBox="0 0 24 24">
+
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M6 18L18 6M6 6l12 12">
+                    </path>
+
+                </svg>
+
+            </button>
+
+
+
+            <!-- =================================================
+                 COLUMNA IZQUIERDA
+            ================================================== -->
+
+            <div class="p-8 md:p-10 flex flex-col justify-center">
+
+
+                <!-- LOGIN -->
+
+                <div
+                    id="view-login"
+                    class="space-y-6">
+
+
+                    <div class="text-center space-y-2">
+
+                        <h2
+                            class="text-2xl font-black tracking-tight text-slate-900 dark:text-white flex items-center justify-center gap-1.5">
+
+                            Pixel<span class="text-indigo-600 dark:text-indigo-400">
+                                Convert
+                            </span>
+
+                        </h2>
+
+                        <h3 class="text-lg font-bold text-slate-800 dark:text-slate-200">
+
+                            Inicia sesión en tu cuenta
+
+                        </h3>
+
+                    </div>
+
+
+                    <!-- Redes -->
+
+                    <div class="grid grid-cols-3 gap-2">
+
+
+                        <!-- Facebook -->
+
+                        <button
+                            type="button"
+                            onclick="handleAuthAction('Facebook')"
+                            class="flex items-center justify-center gap-1.5 py-2.5 px-2 bg-[#1877F2] hover:bg-[#166fe5] text-white text-xs font-semibold rounded-xl shadow transition">
+
+                            <svg
+                                class="w-4 h-4 fill-current"
+                                viewBox="0 0 24 24">
+
+                                <path
+                                    d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z">
+                                </path>
+
+                            </svg>
+
+                            Facebook
+
+                        </button>
+
+
+                        <!-- Google -->
+
+                        <button
+                            type="button"
+                            onclick="handleAuthAction('Google')"
+                            class="flex items-center justify-center gap-1.5 py-2.5 px-2 bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 text-xs font-semibold rounded-xl shadow-sm transition">
+
+                            <svg
+                                class="w-4 h-4"
+                                viewBox="0 0 24 24">
+
+                                <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"></path>
+
+                                <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.13 0-5.78-2.11-6.73-4.96H1.19v3.15C3.17 21.31 7.26 24 12 24z"></path>
+
+                                <path fill="#FBBC05" d="M5.27 14.24c-.25-.72-.38-1.49-.38-2.24s.13-1.52.38-2.24V6.6H1.19C.43 8.13 0 9.87 0 12s.43 3.87 1.19 5.4l4.08-3.16z"></path>
+
+                                <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.26 0 3.17 2.69 1.19 6.6l4.08 3.15c.95-2.85 3.6-4.96 6.73-4.96z"></path>
+
+                            </svg>
+
+                            Google
+
+                        </button>
+
+
+                        <!-- SSO -->
+
+                        <button
+                            type="button"
+                            onclick="handleAuthAction('SSO')"
+                            class="flex items-center justify-center gap-1.5 py-2.5 px-2 bg-slate-800 hover:bg-slate-700 dark:bg-slate-700 dark:hover:bg-slate-600 text-white text-xs font-semibold rounded-xl shadow transition">
+
+                            SSO
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="relative flex py-1 items-center">
+
+                        <div class="flex-grow border-t border-slate-200 dark:border-slate-800"></div>
+
+                        <span class="flex-shrink mx-4 text-slate-400 text-[11px] uppercase font-bold tracking-wider">
+
+                            o con email
+
+                        </span>
+
+                        <div class="flex-grow border-t border-slate-200 dark:border-slate-800"></div>
+
+                    </div>
+
+
+                    <!-- Login email -->
+
+                    <form
+                        onsubmit="ejecutarAccion(event, 'Inicio de sesión exitoso')"
+                        class="space-y-4">
+
+
+                        <div class="relative">
+
+                            <input
+                                type="email"
+                                placeholder="Email"
+                                required
+                                class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl pl-4 pr-4 py-3 text-sm focus:outline-none focus:border-indigo-600 transition">
+
+                        </div>
+
+
+                        <div class="space-y-1">
+
+                            <div class="relative">
+
+                                <input
+                                    type="password"
+                                    placeholder="Contraseña"
+                                    required
+                                    class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl pl-4 pr-4 py-3 text-sm focus:outline-none focus:border-indigo-600 transition">
+
+                            </div>
+
+
+                            <div class="text-right">
+
+                                <button
+                                    type="button"
+                                    onclick="cambiarVistaModal('recuperar')"
+                                    class="text-xs text-indigo-600 dark:text-indigo-400 hover:underline font-medium">
+
+                                    ¿Olvidaste tu contraseña?
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-indigo-600/30 transition text-sm">
+
+                            Entrar
+
+                        </button>
+
+                    </form>
+
+
+                    <div class="text-center text-xs text-slate-500 dark:text-slate-400">
+
+                        <p>
+
+                            ¿No estás registrado?
+
+                            <button
+                                type="button"
+                                onclick="cambiarVistaModal('registro')"
+                                class="text-indigo-600 dark:text-indigo-400 font-bold hover:underline">
+
+                                Crear una cuenta
+
+                            </button>
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     REGISTRO
+                ================================================== -->
+
+                <div
+                    id="view-registro"
+                    class="space-y-6 hidden">
+
+
+                    <div class="text-center space-y-2">
+
+                        <h2
+                            class="text-2xl font-black tracking-tight text-slate-900 dark:text-white flex items-center justify-center gap-1.5">
+
+                            Pixel<span class="text-indigo-600 dark:text-indigo-400">
+                                Convert
+                            </span>
+
+                        </h2>
+
+                        <h3 class="text-lg font-bold text-slate-800 dark:text-slate-200">
+
+                            Crear una nueva cuenta
+
+                        </h3>
+
+                    </div>
+
+
+                    <!-- Redes -->
+
+                    <div class="grid grid-cols-3 gap-2">
+
+
+                        <button
+                            type="button"
+                            onclick="handleAuthAction('Facebook')"
+                            class="flex items-center justify-center gap-1.5 py-2.5 px-2 bg-[#1877F2] hover:bg-[#166fe5] text-white text-xs font-semibold rounded-xl shadow transition">
+
+                            <svg
+                                class="w-4 h-4 fill-current"
+                                viewBox="0 0 24 24">
+
+                                <path
+                                    d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z">
+                                </path>
+
+                            </svg>
+
+                            Facebook
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            onclick="handleAuthAction('Google')"
+                            class="flex items-center justify-center gap-1.5 py-2.5 px-2 bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 text-xs font-semibold rounded-xl shadow-sm transition">
+
+                            Google
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            onclick="handleAuthAction('SSO')"
+                            class="flex items-center justify-center gap-1.5 py-2.5 px-2 bg-slate-800 hover:bg-slate-700 dark:bg-slate-700 dark:hover:bg-slate-600 text-white text-xs font-semibold rounded-xl shadow transition">
+
+                            SSO
+
+                        </button>
+
+                    </div>
+
+
+                    <form
+                        onsubmit="ejecutarAccion(event, 'Cuenta creada exitosamente')"
+                        class="space-y-3">
+
+
+                        <input
+                            type="text"
+                            placeholder="Nombre"
+                            required
+                            class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-indigo-600 transition">
+
+
+                        <input
+                            type="email"
+                            placeholder="Email"
+                            required
+                            class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-indigo-600 transition">
+
+
+                        <input
+                            type="password"
+                            placeholder="Contraseña"
+                            required
+                            class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-indigo-600 transition">
+
+
+                        <button
+                            type="submit"
+                            class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-indigo-600/30 transition text-sm">
+
+                            Registro
+
+                        </button>
+
+                    </form>
+
+
+                    <div class="text-center text-xs text-slate-500 dark:text-slate-400 space-y-1">
+
+                        <p>
+
+                            ¿Ya estás registrado?
+
+                            <button
+                                type="button"
+                                onclick="cambiarVistaModal('login')"
+                                class="text-indigo-600 dark:text-indigo-400 font-bold hover:underline">
+
+                                Acceder
+
+                            </button>
+
+                        </p>
+
+                        <p class="text-[11px] text-slate-400 pt-1">
+
+                            Al crear una cuenta, aceptas las
+                            <a href="#" class="underline">Condiciones del servicio</a>
+                            y
+                            <a href="#" class="underline">Política de Privacidad</a>.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     RECUPERAR
+                ================================================== -->
+
+                <div
+                    id="view-recuperar"
+                    class="space-y-6 hidden">
+
+
+                    <div class="text-center space-y-2">
+
+                        <h2
+                            class="text-2xl font-black tracking-tight text-slate-900 dark:text-white">
+
+                            Pixel<span class="text-indigo-600 dark:text-indigo-400">
+                                Convert
+                            </span>
+
+                        </h2>
+
+                        <h3 class="text-lg font-bold text-slate-800 dark:text-slate-200">
+
+                            Recupera tu acceso
+
+                        </h3>
+
+                        <p class="text-xs text-slate-500 dark:text-slate-400">
+
+                            Introduce tu correo electrónico y te enviaremos instrucciones para restablecer tu contraseña.
+
+                        </p>
+
+                    </div>
+
+
+                    <form
+                        onsubmit="ejecutarAccion(event, 'Instrucciones enviadas a tu correo')"
+                        class="space-y-4">
+
+
+                        <input
+                            type="email"
+                            placeholder="Tu email registrado"
+                            required
+                            class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-600 transition">
+
+
+                        <button
+                            type="submit"
+                            class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-indigo-600/30 transition text-sm">
+
+                            Enviar instrucciones
+
+                        </button>
+
+                    </form>
+
+
+                    <div class="text-center text-xs text-slate-500 dark:text-slate-400">
+
+                        <button
+                            type="button"
+                            onclick="cambiarVistaModal('login')"
+                            class="text-indigo-600 dark:text-indigo-400 font-bold hover:underline">
+
+                            Volver al inicio de sesión
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 PANEL DERECHO
+            ================================================== -->
+
+            <div
+                class="bg-gradient-to-br from-indigo-900/10 via-slate-100 to-indigo-50 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950/30 p-8 md:p-10 flex flex-col justify-center items-center text-center border-t md:border-t-0 md:border-l border-slate-200 dark:border-slate-800 relative overflow-hidden">
+
+
+                <div class="absolute -right-16 -bottom-16 w-48 h-48 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+
+                <div class="max-w-xs space-y-6 relative z-10">
+
+
+                    <div
+                        class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200/80 dark:border-slate-800 p-5 rounded-2xl shadow-xl space-y-4">
+
+
+                        <div class="flex items-center justify-center gap-3">
+
+                            <div
+                                class="w-9 h-9 rounded-xl bg-indigo-50 dark:bg-indigo-600/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shadow-inner">
+
+                                <svg
+                                    class="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    viewBox="0 0 24 24">
+
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                    </path>
+
+                                </svg>
+
+                            </div>
+
+
+                            <div
+                                class="w-9 h-9 rounded-xl bg-violet-50 dark:bg-violet-600/20 text-violet-600 dark:text-violet-400 flex items-center justify-center shadow-inner">
+
+                                <svg
+                                    class="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    viewBox="0 0 24 24">
+
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M13 10V3L4 14h7v7l9-11h-7z">
+                                    </path>
+
+                                </svg>
+
+                            </div>
+
+
+                            <div
+                                class="w-9 h-9 rounded-xl bg-blue-50 dark:bg-blue-600/20 text-blue-600 dark:text-blue-400 flex items-center justify-center shadow-inner">
+
+                                <svg
+                                    class="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    viewBox="0 0 24 24">
+
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z">
+                                    </path>
+
+                                </svg>
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            class="py-2.5 px-4 bg-gradient-to-r from-indigo-600 to-violet-600 rounded-xl shadow-md shadow-indigo-500/20 text-white">
+
+                            <span class="text-xs font-bold tracking-wide">
+
+                                Kit Profesional de Edición
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="space-y-2">
+
+                        <h4
+                            class="font-extrabold text-slate-900 dark:text-white text-base tracking-tight">
+
+                            Tu editor de imágenes rápido y sencillo
+
+                        </h4>
+
+                        <p
+                            class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+
+                            PixelConvert te ayuda a comprimir, convertir, recortar y cambiar el tamaño de las imágenes fácilmente. Disfruta de un kit completo.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================================================
+         FOOTER
+    ========================================================== -->
+
+    <footer
+        class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 text-center py-4 text-xs text-slate-500">
+
+        © 2026 PixelConvert - Todos los derechos reservados.
+
+    </footer>
+
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+    ========================================================== -->
+
+    <script>
+
+
+        // =====================================================
+        // TEMA
+        // =====================================================
+
+        const htmlElement =
+            document.documentElement;
+
+
+        function toggleTheme() {
+
+            htmlElement.classList.toggle('dark');
+
+            htmlElement.classList.toggle('light');
+
+            localStorage.setItem(
+                'theme',
+                htmlElement.classList.contains('dark')
+                    ? 'dark'
+                    : 'light'
+            );
+
+        }
+
+
+        document
+            .getElementById('btn-theme-desktop')
+            .addEventListener(
+                'click',
+                toggleTheme
+            );
+
+
+        document
+            .getElementById('btn-theme-mobile')
+            .addEventListener(
+                'click',
+                toggleTheme
+            );
+
+
+
+        // =====================================================
+        // MODAL
+        // =====================================================
+
+        const authModal =
+            document.getElementById('auth-modal');
+
+        const viewLogin =
+            document.getElementById('view-login');
+
+        const viewRegistro =
+            document.getElementById('view-registro');
+
+        const viewRecuperar =
+            document.getElementById('view-recuperar');
+
+
+        function abrirModal(tipo) {
+
+            authModal.classList.remove('hidden');
+
+            document.body.classList.add(
+                'overflow-hidden'
+            );
+
+            cambiarVistaModal(tipo);
+
+        }
+
+
+        function cerrarModal() {
+
+            authModal.classList.add('hidden');
+
+            document.body.classList.remove(
+                'overflow-hidden'
+            );
+
+        }
+
+
+        function cambiarVistaModal(tipo) {
+
+            viewLogin.classList.add('hidden');
+
+            viewRegistro.classList.add('hidden');
+
+            viewRecuperar.classList.add('hidden');
+
+
+            if (tipo === 'login') {
+
+                viewLogin.classList.remove('hidden');
+
+            }
+
+            else if (tipo === 'registro') {
+
+                viewRegistro.classList.remove('hidden');
+
+            }
+
+            else if (tipo === 'recuperar') {
+
+                viewRecuperar.classList.remove('hidden');
+
+            }
+
+        }
+
+
+        function ejecutarAccion(e, mensaje) {
+
+            e.preventDefault();
+
+            mostrarNotificacion(mensaje);
+
+            cerrarModal();
+
+        }
+
+
+
+        // =====================================================
+        // CONFIGURACIÓN DE FACEBOOK Y GOOGLE
+        // =====================================================
+
+        const FACEBOOK_APP_ID =
+            '1037222369226022';
+
+
+        const GOOGLE_CLIENT_ID =
+            '922210497837-leikoai5jpqg1n9vkkmhcrbir7e3sicm.apps.googleusercontent.com';
+
+
+        let facebookSDKReady = false;
+
+        let googleSDKReady = false;
+
+
+
+        // =====================================================
+        // FACEBOOK SDK
+        //
+        // MUY IMPORTANTE:
+        // fbAsyncInit debe estar definido directamente en window.
+        // NO debe estar dentro de window.onload.
+        // =====================================================
+
+        window.fbAsyncInit = function () {
+
+            console.log(
+                '[Facebook] Inicializando SDK...'
+            );
+
+
+            try {
+
+                FB.init({
+
+                    appId:
+                        FACEBOOK_APP_ID,
+
+                    cookie:
+                        true,
+
+                    xfbml:
+                        true,
+
+                    version:
+                        'v18.0'
+
+                });
+
+
+                facebookSDKReady = true;
+
+
+                console.log(
+                    '[Facebook] SDK inicializado correctamente.'
+                );
+
+
+            }
+
+            catch (error) {
+
+                facebookSDKReady = false;
+
+
+                console.error(
+                    '[Facebook] Error al inicializar:',
+                    error
+                );
+
+            }
+
+        };
+
+
+
+        // =====================================================
+        // GOOGLE SDK
+        // =====================================================
+
+        window.addEventListener(
+            'load',
+            function () {
+
+
+                console.log(
+                    '[Google] Comprobando SDK...'
+                );
+
+
+                if (
+                    typeof google !== 'undefined' &&
+                    google.accounts &&
+                    google.accounts.id
+                ) {
+
+
+                    try {
+
+
+                        google.accounts.id.initialize({
+
+                            client_id:
+                                GOOGLE_CLIENT_ID,
+
+                            callback:
+                                manejarRespuestaGoogle
+
+                        });
+
+
+                        googleSDKReady = true;
+
+
+                        console.log(
+                            '[Google] SDK inicializado correctamente.'
+                        );
+
+
+                    }
+
+                    catch (error) {
+
+
+                        googleSDKReady = false;
+
+
+                        console.error(
+                            '[Google] Error al inicializar:',
+                            error
+                        );
+
+
+                    }
+
+
+                }
+
+                else {
+
+
+                    console.warn(
+                        '[Google] El SDK todavía no está disponible.'
+                    );
+
+
+                }
+
+
+            }
+        );
+
+
+
+        // =====================================================
+        // MANEJAR BOTONES DE AUTENTICACIÓN
+        // =====================================================
+
+        function handleAuthAction(proveedor) {
+
+
+            console.log(
+                `[Auth] Botón presionado: ${proveedor}`
+            );
+
+
+            // -------------------------------------------------
+            // FACEBOOK
+            // -------------------------------------------------
+
+            if (proveedor === 'Facebook') {
+
+                iniciarSesionFacebook();
+
+                return;
+
+            }
+
+
+            // -------------------------------------------------
+            // GOOGLE
+            // -------------------------------------------------
+
+            if (proveedor === 'Google') {
+
+                iniciarSesionGoogle();
+
+                return;
+
+            }
+
+
+            // -------------------------------------------------
+            // SSO
+            // -------------------------------------------------
+
+            if (proveedor === 'SSO') {
+
+                mostrarNotificacion(
+                    'La autenticación SSO todavía no está configurada.'
+                );
+
+                return;
+
+            }
+
+
+            mostrarNotificacion(
+                `Conectando con autenticación externa de ${proveedor}...`
+            );
+
+        }
+
+
+
+        // =====================================================
+        // LOGIN CON FACEBOOK
+        // =====================================================
+
+        function iniciarSesionFacebook() {
+
+
+            console.log(
+                '[Facebook] Intentando iniciar sesión...'
+            );
+
+
+            // -------------------------------------------------
+            // NO USAR FILE://
+            // -------------------------------------------------
+
+            if (
+                window.location.protocol === 'file:'
+            ) {
+
+
+                console.error(
+                    '[Facebook] La aplicación está ejecutándose mediante file://'
+                );
+
+
+                mostrarNotificacion(
+                    'Facebook requiere ejecutar la aplicación con Live Server.'
+                );
+
+
+                return;
+
+            }
+
+
+
+            // -------------------------------------------------
+            // COMPROBAR SDK
+            // -------------------------------------------------
+
+            if (
+                typeof FB === 'undefined' ||
+                typeof FB.login !== 'function'
+            ) {
+
+
+                console.error(
+                    '[Facebook] SDK no disponible.'
+                );
+
+
+                mostrarNotificacion(
+                    'Facebook todavía no está listo. Recarga la página e inténtalo nuevamente.'
+                );
+
+
+                return;
+
+            }
+
+
+
+            // -------------------------------------------------
+            // LOGIN
+            // -------------------------------------------------
+
+            try {
+
+
+                FB.login(
+
+                    function (response) {
+
+
+                        console.log(
+                            '[Facebook] Respuesta:',
+                            response
+                        );
+
+
+                        // -------------------------------------
+                        // LOGIN CORRECTO
+                        // -------------------------------------
+
+                        if (
+                            response &&
+                            response.authResponse
+                        ) {
+
+
+                            const accessToken =
+                                response.authResponse
+                                    .accessToken;
+
+
+                            console.log(
+                                '[Facebook] Login correcto.'
+                            );
+
+
+                            console.log(
+                                '[Facebook] Access Token recibido.'
+                            );
+
+
+                            // ---------------------------------
+                            // OBTENER USUARIO
+                            // ---------------------------------
+
+                            FB.api(
+
+                                '/me',
+
+                                {
+                                    fields:
+                                        'id,name,email'
+                                },
+
+                                function (userInfo) {
+
+
+                                    console.log(
+                                        '[Facebook] Datos del usuario:',
+                                        userInfo
+                                    );
+
+
+                                    if (
+                                        userInfo &&
+                                        !userInfo.error
+                                    ) {
+
+
+                                        const nombre =
+                                            userInfo.name ||
+                                            'Usuario';
+
+
+                                        mostrarNotificacion(
+                                            `¡Bienvenido, ${nombre}!`
+                                        );
+
+
+                                        cerrarModal();
+
+
+                                    }
+
+                                    else {
+
+
+                                        console.error(
+                                            '[Facebook] Error obteniendo datos:',
+                                            userInfo
+                                        );
+
+
+                                        mostrarNotificacion(
+                                            'Facebook inició sesión, pero no se pudieron obtener los datos del usuario.'
+                                        );
+
+                                    }
+
+
+                                }
+
+                            );
+
+
+                        }
+
+                        // -------------------------------------
+                        // LOGIN CANCELADO
+                        // -------------------------------------
+
+                        else {
+
+
+                            console.warn(
+                                '[Facebook] Login cancelado o rechazado.',
+                                response
+                            );
+
+
+                            mostrarNotificacion(
+                                'Inicio de sesión con Facebook cancelado.'
+                            );
+
+                        }
+
+
+                    },
+
+                    {
+                        scope:
+                            'public_profile,email'
+                    }
+
+                );
+
+
+            }
+
+            catch (error) {
+
+
+                console.error(
+                    '[Facebook] Error:',
+                    error
+                );
+
+
+                mostrarNotificacion(
+                    'Ocurrió un error al conectar con Facebook.'
+                );
+
+
+            }
+
+        }
+
+
+
+        // =====================================================
+        // LOGIN CON GOOGLE
+        // =====================================================
+
+        function iniciarSesionGoogle() {
+
+
+            console.log(
+                '[Google] Intentando iniciar sesión...'
+            );
+
+
+            if (
+                window.location.protocol === 'file:'
+            ) {
+
+
+                mostrarNotificacion(
+                    'Google requiere ejecutar la aplicación mediante un servidor web.'
+                );
+
+
+                return;
+
+            }
+
+
+
+            if (
+                typeof google === 'undefined' ||
+                !google.accounts ||
+                !google.accounts.id
+            ) {
+
+
+                console.error(
+                    '[Google] SDK no disponible.'
+                );
+
+
+                mostrarNotificacion(
+                    'El servicio de Google no está disponible en este momento.'
+                );
+
+
+                return;
+
+            }
+
+
+
+            try {
+
+
+                google.accounts.id.prompt(
+
+                    function (notification) {
+
+
+                        console.log(
+                            '[Google] Estado del prompt:',
+                            notification
+                        );
+
+
+                        if (
+                            notification.isNotDisplayed() ||
+                            notification.isSkippedMoment()
+                        ) {
+
+
+                            console.log(
+                                '[Google] Utilizando OAuth.'
+                            );
+
+
+                            if (
+                                !google.accounts.oauth2
+                            ) {
+
+
+                                mostrarNotificacion(
+                                    'OAuth de Google no está disponible.'
+                                );
+
+
+                                return;
+
+                            }
+
+
+
+                            const client =
+                                google.accounts.oauth2
+                                    .initTokenClient({
+
+                                        client_id:
+                                            GOOGLE_CLIENT_ID,
+
+                                        scope:
+                                            'email profile openid',
+
+                                        callback:
+                                            function (response) {
+
+
+                                                console.log(
+                                                    '[Google] Respuesta:',
+                                                    response
+                                                );
+
+
+                                                if (
+                                                    response &&
+                                                    response.access_token
+                                                ) {
+
+
+                                                    mostrarNotificacion(
+                                                        '¡Autenticación con Google exitosa!'
+                                                    );
+
+
+                                                    cerrarModal();
+
+
+                                                }
+
+                                                else {
+
+
+                                                    mostrarNotificacion(
+                                                        'No se pudo completar el inicio de sesión con Google.'
+                                                    );
+
+                                                }
+
+
+                                            }
+
+                                    });
+
+
+
+                            client.requestAccessToken();
+
+
+                        }
+
+
+                    }
+
+                );
+
+
+            }
+
+            catch (error) {
+
+
+                console.error(
+                    '[Google] Error:',
+                    error
+                );
+
+
+                mostrarNotificacion(
+                    'Ocurrió un error al conectar con Google.'
+                );
+
+
+            }
+
+        }
+
+
+
+        // =====================================================
+        // RESPUESTA DE GOOGLE
+        // =====================================================
+
+        function manejarRespuestaGoogle(response) {
+
+
+            console.log(
+                '[Google] Credencial recibida:',
+                response
+            );
+
+
+            if (
+                response &&
+                response.credential
+            ) {
+
+
+                mostrarNotificacion(
+                    '¡Inicio de sesión con Google exitoso!'
+                );
+
+
+                cerrarModal();
+
+
+            }
+
+            else {
+
+
+                console.error(
+                    '[Google] No se recibió una credencial válida.'
+                );
+
+
+                mostrarNotificacion(
+                    'No se pudo completar el inicio de sesión con Google.'
+                );
+
+
+            }
+
+        }
+
+
+
+        // =====================================================
+        // NOTIFICACIONES
+        // =====================================================
+
+        function mostrarNotificacion(texto) {
+
+
+            const alertaExistente =
+                document.getElementById(
+                    'toast-notificacion'
+                );
+
+
+            if (alertaExistente) {
+
+                alertaExistente.remove();
+
+            }
+
+
+
+            const toast =
+                document.createElement('div');
+
+
+            toast.id =
+                'toast-notificacion';
+
+
+            toast.className =
+                "fixed bottom-5 right-5 z-50 bg-slate-900 text-white dark:bg-white dark:text-slate-900 px-5 py-3 rounded-2xl shadow-2xl border border-slate-700 dark:border-slate-200 text-xs font-bold flex items-center gap-3 animate-in fade-in slide-in-from-bottom-5 duration-300";
+
+
+            toast.innerHTML = `
+
+                <div class="w-2 h-2 rounded-full bg-indigo-500 animate-ping"></div>
+
+                <span>${texto}</span>
+
+            `;
+
+
+            document.body.appendChild(toast);
+
+
+
+            setTimeout(
+                () => {
+
+                    toast.classList.add(
+                        'opacity-0',
+                        'transition-opacity',
+                        'duration-300'
+                    );
+
+
+                    setTimeout(
+                        () => toast.remove(),
+                        300
+                    );
+
+                },
+                3500
+            );
+
+        }
+
+
+
+        // =====================================================
+        // CONVERTIDOR DE IMÁGENES
+        // =====================================================
+
+        const dropZone =
+            document.getElementById(
+                'drop-zone'
+            );
+
+
+        const inputImagenes =
+            document.getElementById(
+                'input-imagenes'
+            );
+
+
+        const textosGuia =
+            document.getElementById(
+                'textos-guia'
+            );
+
+
+        const contenedorPreview =
+            document.getElementById(
+                'contenedor-preview'
+            );
+
+
+        const gridPreview =
+            document.getElementById(
+                'grid-preview'
+            );
+
+
+        const contadorArchivos =
+            document.getElementById(
+                'contador-archivos'
+            );
+
+
+        const formConvertidor =
+            document.getElementById(
+                'form-convertidor'
+            );
+
+
+        const btnSubmit =
+            document.getElementById(
+                'btn-submit'
+            );
+
+
+
+        // =====================================================
+        // DRAG & DROP
+        // =====================================================
+
+        [
+            'dragenter',
+            'dragover',
+            'dragleave',
+            'drop'
+        ].forEach(
+
+            eventName => {
+
+                dropZone.addEventListener(
+
+                    eventName,
+
+                    (e) => {
+
+                        e.preventDefault();
+
+                        e.stopPropagation();
+
+                    },
+
+                    false
+
+                );
+
+            }
+
+        );
+
+
+
+        dropZone.addEventListener(
+
+            'drop',
+
+            (e) => {
+
+                inputImagenes.files =
+                    e.dataTransfer.files;
+
+                procesarArchivos(
+                    e.dataTransfer.files
+                );
+
+            }
+
+        );
+
+
+
+        inputImagenes.addEventListener(
+
+            'change',
+
+            (e) =>
+                procesarArchivos(
+                    e.target.files
+                )
+
+        );
+
+
+
+        // =====================================================
+        // PROCESAR ARCHIVOS
+        // =====================================================
+
+        function procesarArchivos(archivos) {
+
+
+            gridPreview.innerHTML = '';
+
+
+            if (
+                archivos &&
+                archivos.length > 0
+            ) {
+
+
+                textosGuia.classList.add(
+                    'hidden'
+                );
+
+
+                contenedorPreview.classList.remove(
+                    'hidden'
+                );
+
+
+                contenedorPreview.classList.add(
+                    'flex'
+                );
+
+
+                contadorArchivos.textContent =
+                    `${archivos.length} imagen(es) seleccionada(s)`;
+
+
+                btnSubmit.disabled =
+                    false;
+
+
+                btnSubmit.className =
+                    "w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3.5 rounded-xl transition-all duration-300 border border-indigo-500 shadow-lg shadow-indigo-600/30 cursor-pointer";
+
+
+
+                Array.from(archivos)
+                    .forEach(
+
+                        archivo => {
+
+
+                            if (
+                                archivo.type.startsWith(
+                                    'image/'
+                                )
+                            ) {
+
+
+                                const lector =
+                                    new FileReader();
+
+
+                                lector.onload =
+                                    (e) => {
+
+
+                                        const div =
+                                            document.createElement(
+                                                'div'
+                                            );
+
+
+                                        div.className =
+                                            "relative bg-slate-900 p-1 rounded-lg border border-slate-700 flex items-center justify-center h-24 overflow-hidden shadow-md";
+
+
+                                        div.innerHTML = `
+
+                                            <img
+                                                src="${e.target.result}"
+                                                class="h-full w-full object-cover rounded opacity-0 transition-opacity duration-300"
+                                                onload="this.style.opacity=1">
+
+                                        `;
+
+
+                                        gridPreview.appendChild(
+                                            div
+                                        );
+
+                                    };
+
+
+                                lector.readAsDataURL(
+                                    archivo
+                                );
+
+                            }
+
+                        }
+
+                    );
+
+
+            }
+
+            else {
+
+
+                textosGuia.classList.remove(
+                    'hidden'
+                );
+
+
+                contenedorPreview.classList.add(
+                    'hidden'
+                );
+
+
+                contenedorPreview.classList.remove(
+                    'flex'
+                );
+
+
+                btnSubmit.disabled =
+                    true;
+
+
+                btnSubmit.className =
+                    "w-full bg-slate-200 dark:bg-slate-800 text-slate-400 dark:text-slate-500 font-bold py-3.5 rounded-xl transition-all duration-300 border border-slate-300 dark:border-slate-700 shadow-sm cursor-not-allowed";
+
+            }
+
+        }
+
+
+
+        // =====================================================
+        // CONVERTIR IMÁGENES
+        // =====================================================
+
+        formConvertidor.addEventListener(
+
+            'submit',
+
+            (e) => {
+
+
+                e.preventDefault();
+
+
+                if (
+                    inputImagenes.files.length === 0
+                ) {
+
+                    return;
+
+                }
+
+
+
+                const formatoSeleccionado =
+                    document.querySelector(
+                        'input[name="formato"]:checked'
+                    ).value;
+
+
+                let mimeType =
+                    'image/jpeg';
+
+
+                let extension =
+                    'jpg';
+
+
+
+                if (
+                    formatoSeleccionado === 'PNG'
+                ) {
+
+                    mimeType =
+                        'image/png';
+
+                    extension =
+                        'png';
+
+                }
+
+                else if (
+                    formatoSeleccionado === 'WEBP'
+                ) {
+
+                    mimeType =
+                        'image/webp';
+
+                    extension =
+                        'webp';
+
+                }
+
+
+
+                btnSubmit.disabled =
+                    true;
+
+
+                btnSubmit.textContent =
+                    "Procesando conversión...";
+
+
+
+                const archivos =
+                    inputImagenes.files;
+
+
+                let procesados =
+                    0;
+
+
+
+                Array.from(archivos)
+                    .forEach(
+
+                        (archivo) => {
+
+
+                            const lector =
+                                new FileReader();
+
+
+                            lector.onload =
+                                function(event) {
+
+
+                                    const img =
+                                        new Image();
+
+
+                                    img.onload =
+                                        function() {
+
+
+                                            const canvas =
+                                                document.createElement(
+                                                    'canvas'
+                                                );
+
+
+                                            canvas.width =
+                                                img.width;
+
+
+                                            canvas.height =
+                                                img.height;
+
+
+                                            const ctx =
+                                                canvas.getContext(
+                                                    '2d'
+                                                );
+
+
+
+                                            if (
+                                                mimeType ===
+                                                'image/jpeg'
+                                            ) {
+
+                                                ctx.fillStyle =
+                                                    '#FFFFFF';
+
+                                                ctx.fillRect(
+                                                    0,
+                                                    0,
+                                                    canvas.width,
+                                                    canvas.height
+                                                );
+
+                                            }
+
+
+
+                                            ctx.drawImage(
+                                                img,
+                                                0,
+                                                0
+                                            );
+
+
+
+                                            canvas.toBlob(
+
+                                                (blob) => {
+
+
+                                                    const urlFalsa =
+                                                        URL.createObjectURL(
+                                                            blob
+                                                        );
+
+
+                                                    const a =
+                                                        document.createElement(
+                                                            'a'
+                                                        );
+
+
+                                                    a.href =
+                                                        urlFalsa;
+
+
+                                                    const nombreOriginal =
+                                                        archivo.name.substring(
+                                                            0,
+                                                            archivo.name.lastIndexOf('.')
+                                                        ) ||
+                                                        archivo.name;
+
+
+                                                    a.download =
+                                                        `${nombreOriginal}_convertido.${extension}`;
+
+
+                                                    document.body.appendChild(
+                                                        a
+                                                    );
+
+
+                                                    a.click();
+
+
+                                                    document.body.removeChild(
+                                                        a
+                                                    );
+
+
+                                                    URL.revokeObjectURL(
+                                                        urlFalsa
+                                                    );
+
+
+                                                    procesados++;
+
+
+
+                                                    if (
+                                                        procesados ===
+                                                        archivos.length
+                                                    ) {
+
+
+                                                        btnSubmit.disabled =
+                                                            false;
+
+
+                                                        btnSubmit.textContent =
+                                                            "Convertir y Descargar";
+
+
+                                                        mostrarNotificacion(
+                                                            "¡Imágenes convertidas y descargadas con éxito!"
+                                                        );
+
+
+                                                    }
+
+
+                                                },
+
+                                                mimeType,
+
+                                                0.92
+
+                                            );
+
+                                        };
+
+
+                                    img.src =
+                                        event.target.result;
+
+                                };
+
+
+                            lector.readAsDataURL(
+                                archivo
+                            );
+
+                        }
+
+                    );
+
+            }
+
+        );
+
+
+    </script>
+
+</body>
+
+</html>
