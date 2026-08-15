@@ -1,22 +1,12 @@
-from flask import Flask, render_template, request
-
-app = Flask(__name__)
-
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-if __name__ == '__main__':
-    app.run(debug=True)
-
 from flask import Flask, render_template, request, send_file, jsonify
 import os
 from PIL import Image
 
 app = Flask(__name__)
 
-UPLOAD_FOLDER = 'uploads'
-CONVERTED_FOLDER = 'converted'
+# En Vercel usamos la carpeta temporal /tmp porque el disco es de solo lectura
+UPLOAD_FOLDER = '/tmp/uploads'
+CONVERTED_FOLDER = '/tmp/converted'
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(CONVERTED_FOLDER, exist_ok=True)
